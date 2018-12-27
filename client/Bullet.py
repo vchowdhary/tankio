@@ -27,10 +27,10 @@ class Bullet(pygame.sprite.Sprite):
         print("new x: ", self.x)
         print("new y: ", self.y)
 
-        if self.x >= windowWidth: self.x = 5
-        if self.x <= 0: self.x = windowWidth - 10
-        if self.y >= windowHeight: self.y = 5
-        if self.y <= 0: self.y = windowHeight - 10
+        if self.x >= windowWidth: self.angle = 180
+        if self.x <= 0: self.angle = 0
+        if self.y >= windowHeight: self.angle = 270
+        if self.y <= 0: self.angle = 90
 
         self.rect.x = self.x
         self.rect.y = self.y
@@ -44,7 +44,7 @@ done = False
 clock = pygame.time.Clock()
 
 all_sprites_list = pygame.sprite.Group()
-bullet = Bullet(20, 30, 90, 0)
+bullet = Bullet(50, 50, 270, 0)
 all_sprites_list.add(bullet)
 
 while not done: 
