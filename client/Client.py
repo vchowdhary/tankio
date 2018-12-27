@@ -50,7 +50,7 @@ class Client:
             try:
                 # print(game.get_data())
                 self.socket.sendall(game.get_data())
-                print("Sent data:", game.get_data())
+                # print("Sent data:", game.get_data())
                 time.sleep(1)
             except:
                 self.running = False

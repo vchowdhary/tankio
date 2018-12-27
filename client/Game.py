@@ -19,7 +19,7 @@ class Game:
         self.all_sprites_list = pygame.sprite.Group()
         self.bullet_list = pygame.sprite.Group()
 
-        self.tank = Tank(20, 30, 0, 0)
+        self.tank = Tank(20, 30, 0, random.randint(0, 100))
         self.tank.set_position(random.randint(0, windowWidth), random.randint(0, windowHeight))
 
         self.all_sprites_list.add(self.tank)
@@ -67,9 +67,11 @@ class Game:
         return GameMessage(self.tank, []).get()
 
     def update_game(self, msg):
-        for m in msg:
-            if m["type"] == "tank":
-                self.update_tank(m)
+        for ip in msg:
+            for m in msg[ip]:
+                print(m)
+                if m["type"] == "tank":
+                    self.update_tank(m)
 
     def update_tank(self, m):
         found = False
