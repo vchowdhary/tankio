@@ -55,6 +55,7 @@ class Server:
                 try:
                     self.conns[i].sendall(msg)
                 except BrokenPipeError:
+                    print("Broken pipe error")
                     i -= 1
                     self.conns.remove(self.conns[i])
                     self.addrs.remove(self.addrs[i])
