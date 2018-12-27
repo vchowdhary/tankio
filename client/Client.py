@@ -26,7 +26,7 @@ class Client:
                 data = self.socket.recv(max_buffer_size).decode().rstrip()
                 if data is None or len(data) == 0:
                     continue
-                print("Received:", json.loads(data))
+                print("Received:", data)
                 self.game.update_game(json.loads(data))
 
             except ConnectionResetError:

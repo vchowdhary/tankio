@@ -19,7 +19,7 @@ class Game:
         self.all_sprites_list = pygame.sprite.Group()
         self.bullet_list = pygame.sprite.Group()
 
-        self.tank = Tank(20, 30, 0, random.randint(0, 1000))
+        self.tank = Tank(20, 30, 0, random.randint(0, 100))
         self.tank.set_position(random.randint(0, windowWidth), random.randint(0, windowHeight))
 
         self.all_sprites_list.add(self.tank)
