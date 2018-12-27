@@ -22,7 +22,7 @@ tank1.rect.y = 100
 all_sprites_list.add(tank1)
 
 while not done:
-    clock.tick(1)
+    clock.tick(60)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

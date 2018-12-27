@@ -9,15 +9,17 @@ windowHeight = 300
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, init_x, init_y, angle, tank_indicator):
         super().__init__()
-        self.image = pygame.Surface([windowWidth, windowHeight])
+        self.image = pygame.Surface([80, 80])
         self.x = init_x
         self.y = init_y
         self.angle = angle
         self.tank_indicator = tank_indicator
         self.speed = speed = randint(5, 15)
 
-        pygame.draw.circle(self.image, color, (self.x, self.y), 10)
+        pygame.draw.circle(self.image, color, (self.x, self.y), 5)
         self.rect = self.image.get_rect()
+        self.rect.x = init_x
+        self.rect.y = init_y
 
     def move(self):
 
@@ -37,7 +39,7 @@ class Bullet(pygame.sprite.Sprite):
 
 
 
-pygame.init()
+'''pygame.init()
 
 screen = pygame.display.set_mode((windowWidth, windowHeight))
 done = False
@@ -57,4 +59,4 @@ while not done:
     for sprite in all_sprites_list:
         sprite.move()
     clock.tick(60)
-    pygame.display.flip()
+    pygame.display.flip()'''

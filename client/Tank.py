@@ -24,11 +24,20 @@ class Tank(pygame.sprite.Sprite):
         pygame.draw.rect(self.image, color, [x-20, y-30, x, y])
 
         self.rect = self.image.get_rect()
-        self.bullets = []
+
+    def to_json(self):
+        tank_json = {
+            "id": self.id,
+            "center x": self.rect.center[0],
+            "center y": self.rect.center[1],
+            "rect x": self.rect.x,
+            "rect y": self.rect.y,
+            "orientation": self.orientation
+        }
+        return tank_json
 
     def move(self, pixels):
-        self.rect.x += pixels*math.cos(self.orientation)
-        self.rect.y += pixels*math.sin(self.orientation)
+        pygame.Rect.move_ip(self.rect, pixels*math.cos(self.orientation), pixels*math.sin(self.orientation))
 
         if self.rect.x > windowWidth:
             self.rect.x = 0
@@ -49,7 +58,10 @@ class Tank(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=center)
 
     def shoot(self):
-        return Bullet(self.x, self.y, self.orientation, self.id)
+        return Bullet(self.rect.center[0]+100, self.rect.y+10, self.orientation, self.id)
+
+
+
 
 
 
