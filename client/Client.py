@@ -28,7 +28,7 @@ class Client:
     def start_game(self):
         self.game = Game()
         self.running = True
-        t = Thread(target=self.send_data, args=self.game)
+        t = Thread(target=self.send_data, args=[self.game])
         t.start()
 
     def send_data(self, game):

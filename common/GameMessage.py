@@ -7,12 +7,12 @@ class GameMessage:
         self.bullets = bullets
 
     def get(self):
-        msg = [self.tank.toJSON()]
+        msg = [self.tank.to_json()]
 
         for b in self.bullets:
-            msg.append(b.toJSON())
+            msg.append(b.to_json())
 
-        return json.dumps(msg)
+        return json.dumps(msg).encode()
 
     @staticmethod
     def load(msg):

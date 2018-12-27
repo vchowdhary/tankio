@@ -39,7 +39,7 @@ class Server:
             self.addrs.append(addr)
             print("Found connection:", conn, addr)
 
-            Thread(target=self.client_thread, args=conn.start())
+            Thread(target=self.client_thread, args=(conn))
 
     # send data to all active connections
     def send_all_data(self, states):
