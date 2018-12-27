@@ -13,17 +13,16 @@ class Tank(pygame.sprite.Sprite):
     def __init__(self, x, y, angle, id):
         super().__init__()
 
-        self.image = pygame.Surface([x, y], pygame.SRCALPHA)
-        self.image.fill(color)
+        self.image = pygame.image.load("tank.jpg")
+        self.image = pygame.transform.scale(self.image,(50,50))
         self.original = self.image
         self.orientation = angle
         self.x = x
         self.y = y
         self.id = id
 
-        pygame.draw.rect(self.image, color, [x-20, y-30, x, y])
-
         self.rect = self.image.get_rect()
+        self.rect.topleft = (x-20, y-30)
 
     def to_json(self):
         tank_json = {
@@ -37,7 +36,11 @@ class Tank(pygame.sprite.Sprite):
         return tank_json
 
     def move(self, pixels):
-        pygame.Rect.move_ip(self.rect, pixels*math.cos(self.orientation), pixels*math.sin(self.orientation))
+        orientation_rad = self.orientation*math.pi/180
+        offset_x = pixels*math.cos(orientation_rad)
+        offset_y = -1*pixels*math.sin(orientation_rad)
+
+        pygame.Rect.move_ip(self.rect, offset_x, offset_y)
 
         if self.rect.x > windowWidth:
             self.rect.x = 0
@@ -53,6 +56,7 @@ class Tank(pygame.sprite.Sprite):
     def rotate(self, angle):
         center = self.rect.center
         self.orientation += angle
+        self.orientation %= 360
         print("Rotating", angle, self.orientation)
         self.image = pygame.transform.rotate(self.original, self.orientation)
         self.rect = self.image.get_rect(center=center)
