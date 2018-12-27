@@ -22,8 +22,10 @@ class Bullet(pygame.sprite.Sprite):
     def move(self):
 
         print("speed: " + str(self.speed))
-        self.x += self.speed * np.cos(self.angle)
-        self.y += self.speed * np.sin(self.angle)
+        self.x += self.speed * np.cos(np.deg2rad(self.angle))
+        self.y += self.speed * np.sin(np.deg2rad(self.angle))
+        print("new x: ", self.x)
+        print("new y: ", self.y)
 
         if self.x >= windowWidth: self.x = 5
         if self.x <= 0: self.x = windowWidth - 10
