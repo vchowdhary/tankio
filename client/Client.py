@@ -18,8 +18,6 @@ class Client:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         self.socket.connect((HOST, PORT))
-
-        self.start_game()
         # data = self.socket.recv(1024)
 
         # print('Received', repr(data))
@@ -27,13 +25,14 @@ class Client:
         # self.socket.close()
 
     def start(self):
+        self.start_game()
         self.game.start()
 
     def start_game(self):
         self.game = Game()
         self.running = True
         t = Thread(target=self.send_data, args=[self.game])
-        t.start()
+        # t.start()
 
     def send_data(self, game):
         while self.running:
