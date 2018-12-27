@@ -72,16 +72,16 @@ class Game:
                 print(m)
                 if m["type"] == "tank":
                     self.update_tank(m)
-        # self.screen.fill(BLACK)
-        # self.all_sprites_list.draw(self.screen)
-        #
-        # pygame.display.flip()
+
+        self.screen.fill(BLACK)
+        self.all_sprites_list.draw(self.screen)
+
+        pygame.display.flip()
 
     def update_tank(self, m):
         found = False
         for sprite in self.all_sprites_list:
             if sprite.id == m["id"]:
-                print("HELLO???")
                 sprite.set_position(m["rect x"], m["rect y"])
                 found = True
         if not found:
