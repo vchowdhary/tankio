@@ -60,11 +60,10 @@ class Tank(pygame.sprite.Sprite):
     def shoot(self):
         return Bullet(self.rect.center[0]+10, self.rect.y+10, self.orientation, self.id)
 
-    def set_x(self, x):
+    def set_position(self, x, y):
         self.rect.x = x
-
-    def set_y(self, y):
         self.rect.y = y
+
 
 
 
