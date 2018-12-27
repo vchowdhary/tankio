@@ -1,37 +1,58 @@
 import pygame 
-import math
+from random import *
+import numpy as np
 
 color = (255, 0, 0)
-
-class Bullet(pygame.sprite.Sprite):
-	def __init__(self, init_x, init_y, angle):
-		super().__init__()
-		self.image = pygame.Surface([windowWidth, windowHeight])
-		self.init_x = init_x
-		self.init_y = init_y
-
-		pygame.draw.circle(self.image, color, (init_x, init_y), 10)
-		self.rect = self.image.get_rect()
-	def move(self):
-		
-
-pygame.init()
 windowWidth = 400
 windowHeight = 300
+
+class Bullet(pygame.sprite.Sprite):
+    def __init__(self, init_x, init_y, angle, tank_indicator):
+        super().__init__()
+        self.image = pygame.Surface([windowWidth, windowHeight])
+        self.x = init_x
+        self.y = init_y
+        self.angle = angle
+        self.tank_indicator = tank_indicator
+        self.speed = speed = randint(5, 15)
+
+        pygame.draw.circle(self.image, color, (self.x, self.y), 10)
+        self.rect = self.image.get_rect()
+
+    def move(self):
+
+        print("speed: " + str(self.speed))
+        self.x += self.speed * np.cos(self.angle)
+        self.y += self.speed * np.sin(self.angle)
+
+        if self.x >= windowWidth: self.x = 5
+        if self.x <= 0: self.x = windowWidth - 10
+        if self.y >= windowHeight: self.y = 5
+        if self.y <= 0: self.y = windowHeight - 10
+
+        self.rect.x = self.x
+        self.rect.y = self.y
+
+
+
+pygame.init()
+
 screen = pygame.display.set_mode((windowWidth, windowHeight))
 done = False
 clock = pygame.time.Clock()
 
 all_sprites_list = pygame.sprite.Group()
-bullet = Bullet(20, 30, 0)
+bullet = Bullet(20, 30, 90, 0)
 all_sprites_list.add(bullet)
 
 while not done: 
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			done = True
-	all_sprites_list.update()
-	screen.fill((0, 0, 0))
-	all_sprites_list.draw(screen)
-	clock.tick(60)
-	pygame.display.flip()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
+    all_sprites_list.update()
+    screen.fill((0, 0, 0))
+    all_sprites_list.draw(screen)
+    for sprite in all_sprites_list:
+        sprite.move()
+    clock.tick(60)
+    pygame.display.flip()
