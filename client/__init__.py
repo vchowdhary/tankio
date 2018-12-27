@@ -14,7 +14,7 @@ clock = pygame.time.Clock()
 
 all_sprites_list = pygame.sprite.Group()
 
-tank1 = Tank(20, 30, 0)
+tank1 = Tank(20, 30, 0, 0)
 tank1.rect.x = 100
 tank1.rect.y = 100
 
@@ -28,7 +28,17 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
 
-    tank1.rotate(10)
+    pressed = pygame.key.get_pressed()
+    if pressed[pygame.K_UP]:
+        tank1.move(10)
+    if pressed[pygame.K_DOWN]:
+        tank1.move(-10)
+    if pressed[pygame.K_LEFT]:
+        tank1.rotate(10)
+    if pressed[pygame.K_RIGHT]:
+        tank1.rotate(-10)
+    if pressed[pygame.K_SPACE]:
+        all_sprites_list.add(tank1.shoot())
 
     all_sprites_list.update()
     screen.fill(BLACK)
