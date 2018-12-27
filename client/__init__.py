@@ -22,18 +22,19 @@ tank1.rect.y = 100
 all_sprites_list.add(tank1)
 
 while not done:
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			done = True
-	all_sprites_list.update()
-	tank1.rotate(90)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
 
-	screen.fill(BLACK)
-	all_sprites_list.draw(screen)
+    tank1.rotate(10)
 
-	
-	clock.tick(60)
+    all_sprites_list.update()
+    screen.fill(BLACK)
+    all_sprites_list.draw(screen)
 
-	pygame.display.flip()
+
+    clock.tick(60)
+
+    pygame.display.flip()
 
 pygame.quit()
