@@ -53,13 +53,14 @@ class Server:
             for i in range(len(self.conns)):
                 msg = self.state.get_msg(self.addrs[i][0])
                 try:
+                    print(msg)
                     self.conns[i].sendall(msg)
                 except BrokenPipeError:
                     print("Broken pipe error")
                     i -= 1
                     self.conns.remove(self.conns[i])
                     self.addrs.remove(self.addrs[i])
-            time.sleep(0.01)
+            time.sleep(0.05)
 
     def client_thread(self, connection, ip, max_buffer_size=5120):
         is_active = True
@@ -78,7 +79,7 @@ class Server:
             print("The input size is greater than expected {}".format(client_input_size))
 
         decoded_input = client_input.decode().rstrip()  # decode and strip end of line
-        print("Rec:", decoded_input)
+        # print("Rec:", decoded_input)
         if len(decoded_input) == 0:
             print("bad input")
             return False
