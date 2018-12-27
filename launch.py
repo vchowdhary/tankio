@@ -1,4 +1,4 @@
-from common.GameMessage import GameMessage
+from server.Server import Server
 
-m = GameMessage([], [])
-GameMessage.load("hello")
+c = Server()
+c.start()

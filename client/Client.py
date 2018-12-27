@@ -1,5 +1,6 @@
 import socket
-
+from client.Game import Game
+from threading import Thread
 
 HOST = '192.168.1.155'  # Standard loopback interface address (localhost)
 PORT = 3000        # Port to listen on (non-privileged ports are > 1023)
@@ -10,21 +11,31 @@ class Client:
         print("Init server")
         self.running = False
         self.socket = None
+        self.game = None
 
     def connect(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         self.socket.connect((HOST, PORT))
-        self.socket.sendall(b'Hello, world')
-        data = self.socket.recv(1024)
 
-        print('Received', repr(data))
+        self.start_game()
+        # data = self.socket.recv(1024)
+
+        # print('Received', repr(data))
 
         # self.socket.close()
 
-    def send_data(self, data):
-        self.socket.sendall(data)
-        print("Sent data")
+    def start_game(self):
+        self.game = Game()
+        self.running = True
+        t = Thread(target=self.send_data, args=self.game)
+        t.start()
+
+    def send_data(self, game):
+        while self.running:
+            print(game.get_data())
+            self.socket.sendall(game.get_data())
+            print("Sent data")
 
     def close_connection(self):
         self.socket.close()

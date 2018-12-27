@@ -1,19 +1,18 @@
+import json
+
 
 class GameMessage:
-    def __init__(self, tanks, bullets):
-        self.tanks = tanks
+    def __init__(self, tank, bullets):
+        self.tank = tank
         self.bullets = bullets
 
     def get(self):
-        msg = []
-
-        for tank in self.tanks:
-            msg.append(tank.toJSON())
+        msg = [self.tank.toJSON()]
 
         for b in self.bullets:
             msg.append(b.toJSON())
 
-        return msg
+        return json.dumps(msg)
 
     @staticmethod
     def load(msg):

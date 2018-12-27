@@ -1,6 +1,6 @@
 import pygame
 import math
-from Bullet import Bullet
+from client.Bullet import Bullet
 
 color = (255, 255, 255)
 windowWidth = 400
