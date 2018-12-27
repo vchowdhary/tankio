@@ -73,11 +73,6 @@ class Game:
                 if m["type"] == "tank":
                     self.update_tank(m)
 
-        self.screen.fill(BLACK)
-        self.all_sprites_list.draw(self.screen)
-
-        pygame.display.flip()
-
     def update_tank(self, m):
         found = False
         for sprite in self.all_sprites_list:
