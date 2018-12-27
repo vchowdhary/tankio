@@ -13,8 +13,9 @@ class Tank(pygame.sprite.Sprite):
     def __init__(self, x, y, angle, id):
         super().__init__()
 
-        self.image = pygame.image.load("tank.jpg")
+        self.image = pygame.image.load("tank.png")
         self.image = pygame.transform.scale(self.image,(50,50))
+        self.image.set_colorkey((0,0,0))
         self.original = self.image
         self.orientation = angle
         self.x = x
@@ -40,16 +41,17 @@ class Tank(pygame.sprite.Sprite):
         offset_x = pixels*math.cos(orientation_rad)
         offset_y = -1*pixels*math.sin(orientation_rad)
 
-        pygame.Rect.move_ip(self.rect, offset_x, offset_y)
-
-        if self.rect.x > windowWidth:
-            self.rect.x = 0
-        if self.rect.y > windowHeight:
-            self.rect.y = 0
+        print(self.rect)
         if self.rect.x < 0:
+            self.rect.x = 0
+        if self.rect.x > windowWidth:
             self.rect.x = windowWidth
         if self.rect.y < 0:
+            self.rect.y = 0
+        if self.rect.y > windowHeight:
             self.rect.y = windowHeight
+
+        pygame.Rect.move_ip(self.rect, offset_x, offset_y)
 
         print("move called")
 
@@ -62,7 +64,7 @@ class Tank(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=center)
 
     def shoot(self):
-        return Bullet(self.rect.center[0]+10, self.rect.y+10, self.orientation, self.id)
+        return Bullet(self.rect.center[0]+50*math.cos(self.orientation), self.rect.center[1]-50*math.sin(self.orientation), self.orientation, self.id)
 
     def set_position(self, x, y):
         self.rect.x = x
