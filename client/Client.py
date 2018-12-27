@@ -18,11 +18,17 @@ class Client:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         self.socket.connect((HOST, PORT))
-        # data = self.socket.recv(1024)
 
-        # print('Received', repr(data))
-
-        # self.socket.close()
+    def receive_data(self, max_buffer_size=5120):
+        while self.running:
+            try:
+                data = self.socket.recv(max_buffer_size).decode().rstrip()
+                if data is None:
+                    continue
+                print("Received:", data)
+            except ConnectionResetError:
+                print("Connection closed.")
+                self.running = False
 
     def start(self):
         self.start_game()
@@ -32,14 +38,16 @@ class Client:
         self.game = Game()
         self.running = True
         t = Thread(target=self.send_data, args=[self.game])
-        # t.start()
+        t.start()
+        r = Thread(target=self.receive_data)
+        r.start()
 
     def send_data(self, game):
         while self.running:
             try:
                 # print(game.get_data())
                 self.socket.sendall(game.get_data())
-                # print("Sent data")
+                print("Sent data:", game.get_data())
                 time.sleep(1)
             except:
                 self.running = False

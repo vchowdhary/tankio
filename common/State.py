@@ -1,3 +1,5 @@
+import json
+
 
 class State:
     def __init__(self):
@@ -9,3 +11,10 @@ class State:
             self.state[conn] = data
             return
         self.state[conn] = data
+
+    def get(self):
+        return json.dumps(self.state).encode()
+
+    def get_msg(self, ip):
+        n = {i: self.state[i] for i in self.state if i != ip}
+        return json.dumps(n).encode()
