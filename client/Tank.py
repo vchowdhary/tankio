@@ -42,15 +42,15 @@ class Tank(pygame.sprite.Sprite):
         offset_x = pixels*math.cos(orientation_rad)
         offset_y = -1*pixels*math.sin(orientation_rad)
 
-        print(self.rect)
+        #print(self.rect)
         if self.rect.x < 0:
             self.rect.x = 0
         if self.rect.x > windowWidth:
-            self.rect.x = windowWidth
+            self.rect.x = windowWidth - 20
         if self.rect.y < 0:
             self.rect.y = 0
         if self.rect.y > windowHeight:
-            self.rect.y = windowHeight
+            self.rect.y = windowHeight - 50
 
         pygame.Rect.move_ip(self.rect, offset_x, offset_y)
 
