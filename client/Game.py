@@ -42,13 +42,13 @@ class Game:
 
                 pressed = pygame.key.get_pressed()
                 if pressed[pygame.K_UP]:
-                    self.tank.move(10)
+                    self.tank.move(3)
                 if pressed[pygame.K_DOWN]:
-                    self.tank.move(-10)
+                    self.tank.move(-3)
                 if pressed[pygame.K_LEFT]:
-                    self.tank.rotate(10)
+                    self.tank.rotate(5)
                 if pressed[pygame.K_RIGHT]:
-                    self.tank.rotate(-10)
+                    self.tank.rotate(-5)
 
                 self.all_sprites_list.update()
                 for bullet in self.bullet_list:
