@@ -5,8 +5,8 @@ from common.GameMessage import GameMessage
 
 color = (255, 255, 255)
 BLACK = (0, 0, 0)
-windowWidth = 400
-windowHeight = 300
+windowWidth = 800
+windowHeight = 800
 
 
 class Game:
