@@ -1,6 +1,3 @@
-from client.Tank import Tank
-from client.Bullet import Bullet
-
 
 class State:
     def __init__(self):

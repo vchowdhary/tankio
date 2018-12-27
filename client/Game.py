@@ -12,7 +12,7 @@ windowHeight = 300
 
 class Game:
     def __init__(self):
-        pygame.init()
+
         self.screen = pygame.display.set_mode((windowWidth, windowHeight))
         self.done = False
         self.clock = pygame.time.Clock()
@@ -24,13 +24,13 @@ class Game:
 
         self.all_sprites_list.add(self.tank)
 
-        self.master_loop = Thread(target=self.loop)
-        self.master_loop.start()
+    def start(self):
+        self.loop()
 
     def loop(self):
         while not self.done:
             self.clock.tick(60)
-
+            # print("running")
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.done = True
