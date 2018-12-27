@@ -35,23 +35,17 @@ class Tank(pygame.sprite.Sprite):
 			self.rect.y = windowHeight
 
 	def rotate(self, delta):
-		s = math.sin(delta)
-		c = math.cos(delta)
-		
-		x = windowWidth/2
-		y = windowHeight/2
+		x = self.rect.center[0]
+		y = self.rect.center[1]
 
-		print(x, y)
+		pivotx = self.rect.x - x
+		pivoty = self.rect.y - y
 
-		newcenterx = self.rect.center[0] - x
-		newcentery = self.rect.center[1] - y
-		print(newcenterx, newcentery)
+		newx = pivotx*math.cos(delta) - pivoty*math.sin(delta)
+		newy = pivotx*math.sin(delta) + pivoty*math.cos(delta)
+		self.rect.x = newx + x
+		self.rect.y = newy + y
 
-		newx = newcenterx*math.cos(delta) - newcentery*math.sin(delta)
-		newy = newcenterx*math.sin(delta) + newcentery*math.cos(delta)
-		newcenterx = newx + x
-		newcentery = newy + y
 
-		self.rect.center = (newcenterx, newcentery)
 
 
