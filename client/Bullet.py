@@ -28,12 +28,12 @@ class Bullet(pygame.sprite.Sprite):
 
     def move(self):
 
-        print("speed: " + str(self.speed))
+        #print("speed: " + str(self.speed))
         angle_rad = self.angle*math.pi/180
         self.x += self.speed * math.cos(angle_rad)
         self.y -= self.speed * math.sin(angle_rad)
-        print("new x: ", self.x)
-        print("new y: ", self.y)
+        #print("new x: ", self.x)
+        #print("new y: ", self.y)
 
         if self.x >= windowWidth:
             self.angle = 180 - self.angle

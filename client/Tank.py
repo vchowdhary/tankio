@@ -1,6 +1,6 @@
 import pygame
 import math
-from Bullet import Bullet
+from client.Bullet import Bullet
 
 color = (255, 255, 255)
 windowWidth = 400
@@ -27,6 +27,7 @@ class Tank(pygame.sprite.Sprite):
 
     def to_json(self):
         tank_json = {
+            "type": "tank",
             "id": self.id,
             "center x": self.rect.center[0],
             "center y": self.rect.center[1],
@@ -53,13 +54,13 @@ class Tank(pygame.sprite.Sprite):
 
         pygame.Rect.move_ip(self.rect, offset_x, offset_y)
 
-        print("move called")
+        #print("move called")
 
     def rotate(self, angle):
         center = self.rect.center
         self.orientation += angle
         self.orientation %= 360
-        print("Rotating", angle, self.orientation)
+        #print("Rotating", angle, self.orientation)
         self.image = pygame.transform.rotate(self.original, self.orientation)
         self.rect = self.image.get_rect(center=center)
 
