@@ -81,4 +81,4 @@ class Game:
                 found = True
         if not found:
             t = Tank(m["center x"], m["center y"], m["orientation"], m["id"])
-            self.all_sprites_list.append(t)
+            self.all_sprites_list.add(t)
