@@ -3,8 +3,8 @@ import math
 from client.Bullet import Bullet
 
 color = (255, 255, 255)
-windowWidth = 400
-windowHeight = 300
+windowWidth = 800
+windowHeight = 800
 
 
 class Tank(pygame.sprite.Sprite):
