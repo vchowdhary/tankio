@@ -22,6 +22,8 @@ tank1.rect.y = 100
 all_sprites_list.add(tank1)
 
 while not done:
+    clock.tick(1)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
@@ -31,9 +33,6 @@ while not done:
     all_sprites_list.update()
     screen.fill(BLACK)
     all_sprites_list.draw(screen)
-
-
-    clock.tick(60)
 
     pygame.display.flip()
 
