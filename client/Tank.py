@@ -58,7 +58,14 @@ class Tank(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=center)
 
     def shoot(self):
-        return Bullet(self.rect.center[0]+100, self.rect.y+10, self.orientation, self.id)
+        return Bullet(self.rect.center[0]+10, self.rect.y+10, self.orientation, self.id)
+
+    def set_x(self, x):
+        self.rect.x = x
+
+    def set_y(self, y):
+        self.rect.y = y
+
 
 
 
