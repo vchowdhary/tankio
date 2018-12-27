@@ -5,15 +5,17 @@ color = (255, 255, 255)
 windowWidth = 400
 windowHeight = 300
 
+
 class Tank(pygame.sprite.Sprite):
-    #Constructor for tank, pass in position and state
-    #state = 0 if not shooting, 1 if shooting
+    # Constructor for tank, pass in position and state
+    # state = 0 if not shooting, 1 if shooting
     def __init__(self, x, y, angle):
         super().__init__()
 
-        self.image = pygame.Surface([x, y])
+        self.image = pygame.Surface([x, y], pygame.SRCALPHA)
         self.image.fill(color)
-        self.angle = angle
+        self.original = self.image
+        self.orientation = angle
         self.x = x
         self.y = y
 
@@ -34,11 +36,20 @@ class Tank(pygame.sprite.Sprite):
         if self.rect.y < 0:
             self.rect.y = windowHeight
 
-    def rotate(self, delta):
-        new_img = pygame.transform.rotate(self.image, delta)
+        print("move called")
 
-        self.rect = new_img.get_rect(center=self.rect.center)
-        self.image = new_img
+    def rotate(self, angle):
+        center = self.rect.center
+        self.orientation += angle
+        print("Rotating", angle, self.orientation)
+        self.image = pygame.transform.rotate(self.original, self.orientation)
+        self.rect = self.image.get_rect(center=center)
+
+    # def rotate(self, delta):
+    #     new_img = pygame.transform.rotate(self.image, delta)
+    #
+    #     self.rect = new_img.get_rect(center=self.rect.center)
+    #     self.image = new_img
 
         '''x = self.rect.center[0]
         y = self.rect.center[1]
