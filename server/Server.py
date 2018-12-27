@@ -3,6 +3,7 @@ import sys
 from socket import gethostbyname
 from threading import Thread
 from common.State import State
+import json
 
 HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
 PORT = 3000        # Port to listen on (non-privileged ports are > 1023)
@@ -39,7 +40,8 @@ class Server:
             self.addrs.append(addr)
             print("Found connection:", conn, addr)
 
-            Thread(target=self.client_thread, args=(conn))
+            t = Thread(target=self.client_thread, args=[conn])
+            t.start()
 
     # send data to all active connections
     def send_all_data(self, states):
@@ -50,7 +52,10 @@ class Server:
         is_active = True
 
         while is_active:
-            self.receive_input(connection, max_buffer_size)
+            try:
+                is_active = self.receive_input(connection, max_buffer_size)
+            except:
+                is_active = False
 
     def receive_input(self, connection, max_buffer_size):
         client_input = connection.recv(max_buffer_size)
@@ -59,15 +64,16 @@ class Server:
         if client_input_size > max_buffer_size:
             print("The input size is greater than expected {}".format(client_input_size))
 
-        decoded_input = client_input.decode("utf8").rstrip()  # decode and strip end of line
+        decoded_input = client_input.decode().rstrip()  # decode and strip end of line
+        if len(decoded_input) == 0:
+            return False
         self.process_input(connection, decoded_input)
+        return True
 
     def process_input(self, connection, input_str):
-        print("Processing the input received from client")
-
         data = input_str
-
-        self.state.update(connection, data)
+        print(data)
+        self.state.update(connection, json.loads(data))
 
 
 if __name__ == "__main__":
