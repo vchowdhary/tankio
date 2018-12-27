@@ -2,6 +2,7 @@ import socket
 from client.Game import Game
 from threading import Thread
 import time
+import json
 
 HOST = '192.168.1.155'  # Standard loopback interface address (localhost)
 PORT = 3000        # Port to listen on (non-privileged ports are > 1023)
@@ -23,9 +24,11 @@ class Client:
         while self.running:
             try:
                 data = self.socket.recv(max_buffer_size).decode().rstrip()
-                if data is None:
+                if data is None or len(data) == 0:
                     continue
-                print("Received:", data)
+                print("Received:", json.loads(data))
+                self.game.update_game(json.loads(data))
+
             except ConnectionResetError:
                 print("Connection closed.")
                 self.running = False

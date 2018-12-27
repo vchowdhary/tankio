@@ -54,13 +54,13 @@ class Tank(pygame.sprite.Sprite):
 
         pygame.Rect.move_ip(self.rect, offset_x, offset_y)
 
-        #print("move called")
+        # print("move called")
 
     def rotate(self, angle):
         center = self.rect.center
         self.orientation += angle
         self.orientation %= 360
-        #print("Rotating", angle, self.orientation)
+        # print("Rotating", angle, self.orientation)
         self.image = pygame.transform.rotate(self.original, self.orientation)
         self.rect = self.image.get_rect(center=center)
 

@@ -1,6 +1,5 @@
 import pygame
 import random
-from threading import Thread
 from client.Tank import Tank
 from common.GameMessage import GameMessage
 
@@ -30,36 +29,54 @@ class Game:
 
     def loop(self):
         while not self.done:
-            self.clock.tick(60)
-            # print("running")
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.done = True
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                    b = self.tank.shoot()
-                    self.all_sprites_list.add(b)
-                    self.bullet_list.add(b)
+            try:
+                self.clock.tick(60)
+                # print("running")
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        self.done = True
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                        b = self.tank.shoot()
+                        self.all_sprites_list.add(b)
+                        self.bullet_list.add(b)
 
-            pressed = pygame.key.get_pressed()
-            if pressed[pygame.K_UP]:
-                self.tank.move(10)
-            if pressed[pygame.K_DOWN]:
-                self.tank.move(-10)
-            if pressed[pygame.K_LEFT]:
-                self.tank.rotate(10)
-            if pressed[pygame.K_RIGHT]:
-                self.tank.rotate(-10)
+                pressed = pygame.key.get_pressed()
+                if pressed[pygame.K_UP]:
+                    self.tank.move(10)
+                if pressed[pygame.K_DOWN]:
+                    self.tank.move(-10)
+                if pressed[pygame.K_LEFT]:
+                    self.tank.rotate(10)
+                if pressed[pygame.K_RIGHT]:
+                    self.tank.rotate(-10)
 
-            self.all_sprites_list.update()
-            for bullet in self.bullet_list:
-                bullet.move()
+                self.all_sprites_list.update()
+                for bullet in self.bullet_list:
+                    bullet.move()
 
-            self.screen.fill(BLACK)
-            self.all_sprites_list.draw(self.screen)
+                self.screen.fill(BLACK)
+                self.all_sprites_list.draw(self.screen)
 
-            pygame.display.flip()
+                pygame.display.flip()
+            except KeyboardInterrupt:
+                self.done = True
 
         pygame.quit()
 
     def get_data(self):
         return GameMessage(self.tank, []).get()
+
+    def update_game(self, msg):
+        for m in msg:
+            if m["type"] == "tank":
+                self.update_tank(m)
+
+    def update_tank(self, m):
+        found = False
+        for sprite in self.all_sprites_list:
+            if sprite is Tank and sprite.id == m["id"]:
+                sprite.set_position(m["rect x"], m["rect y"])
+                found = True
+        if not found:
+            t = Tank(m["center x"], m["center y"], m["orientation"], m["id"])
+            self.all_sprites_list.append(t)

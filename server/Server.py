@@ -55,9 +55,9 @@ class Server:
                 try:
                     self.conns[i].sendall(msg)
                 except BrokenPipeError:
+                    i -= 1
                     self.conns.remove(self.conns[i])
                     self.addrs.remove(self.addrs[i])
-                    i -= 1
             time.sleep(1)
 
     def client_thread(self, connection, ip, max_buffer_size=5120):
