@@ -9,17 +9,25 @@ class Client:
     def __init__(self):
         print("Init server")
         self.running = False
+        self.socket = None
 
     def connect(self):
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.close()
-            s.connect((HOST, PORT))
-            s.sendall(b'Hello, world')
-            data = s.recv(1024)
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        self.socket.connect((HOST, PORT))
+        self.socket.sendall(b'Hello, world')
+        data = self.socket.recv(1024)
 
         print('Received', repr(data))
 
-        s.close()
+        # self.socket.close()
+
+    def send_data(self, data):
+        self.socket.sendall(data)
+        print("Sent data")
+
+    def close_connection(self):
+        self.socket.close()
 
 
 if __name__ == "__main__":
