@@ -18,6 +18,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.all_sprites_list = pygame.sprite.Group()
+        self.bullet_list = pygame.sprite.Group()
 
         self.tank = Tank(20, 30, 0, 0)
         self.tank.set_position(random.randint(0, windowWidth), random.randint(0, windowHeight))
@@ -34,6 +35,10 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.done = True
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                    b = self.tank.shoot()
+                    self.all_sprites_list.add(b)
+                    self.bullet_list.add(b)
 
             pressed = pygame.key.get_pressed()
             if pressed[pygame.K_UP]:
@@ -44,10 +49,11 @@ class Game:
                 self.tank.rotate(10)
             if pressed[pygame.K_RIGHT]:
                 self.tank.rotate(-10)
-            if pressed[pygame.K_SPACE]:
-                self.all_sprites_list.add(self.tank.shoot())
 
             self.all_sprites_list.update()
+            for bullet in self.bullet_list:
+                bullet.move()
+
             self.screen.fill(BLACK)
             self.all_sprites_list.draw(self.screen)
 
