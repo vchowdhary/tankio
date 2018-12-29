@@ -54,7 +54,7 @@ class Server:
             for i in range(len(self.conns)):
                 msg = self.state.get_msg(self.addrs[i][0])
                 try:
-                    print(msg)
+                    # print(msg)
                     self.conns[i].sendall(msg)
                 except BrokenPipeError:
                     print("Broken pipe error")
@@ -72,6 +72,8 @@ class Server:
             except JSONDecodeError:
                 print("Json decode error on", ip)
                 is_active = False
+
+        print("Stopped receiving for ", ip)
 
     def receive_input(self, connection, ip, max_buffer_size):
         client_input = connection.recv(max_buffer_size)
