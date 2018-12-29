@@ -75,7 +75,7 @@ class Game:
     def update_tank(self, m):
         found = False
         for sprite in self.all_sprites_list:
-            if sprite is Tank and sprite.id == m["id"]:
+            if sprite.id == m["id"]:
                 sprite.set_position(m["rect x"], m["rect y"])
                 sprite.rotate(m["orientation"] - sprite.orientation)
                 found = True
