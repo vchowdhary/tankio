@@ -3,6 +3,7 @@ from client.Game import Game
 from threading import Thread
 import time
 import json
+from json import JSONDecodeError
 
 HOST = '192.168.1.155'  # Standard loopback interface address (localhost)
 PORT = 3000        # Port to listen on (non-privileged ports are > 1023)
@@ -26,12 +27,13 @@ class Client:
                 data = self.socket.recv(max_buffer_size).decode().rstrip()
                 if data is None or len(data) < 5:
                     continue
-                print("Received:", data)
                 self.game.update_game(json.loads(data))
 
             except ConnectionResetError:
                 print("Connection closed.")
                 self.running = False
+            except JSONDecodeError:
+                print("Skipping bad json input")
 
     def start(self):
         self.start_game()
@@ -50,8 +52,8 @@ class Client:
             # try:
             # print(game.get_data())
             self.socket.sendall(game.get_data())
-            # print("Sent data:", game.get_data())
-            time.sleep(0.05)
+            print("Sent data:", game.get_data())
+            time.sleep(0.01)
             # except:
             #     self.running = False
             #     self.close_connection()

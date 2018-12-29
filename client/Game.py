@@ -69,7 +69,6 @@ class Game:
     def update_game(self, msg):
         for ip in msg:
             for m in msg[ip]:
-                print(m)
                 if m["type"] == "tank":
                     self.update_tank(m)
 

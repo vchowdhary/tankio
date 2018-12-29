@@ -5,6 +5,7 @@ from threading import Thread
 from common.State import State
 import json
 import time
+from json import JSONDecodeError
 
 HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
 PORT = 3000        # Port to listen on (non-privileged ports are > 1023)
@@ -68,7 +69,8 @@ class Server:
         while is_active:
             try:
                 is_active = self.receive_input(connection, ip, max_buffer_size)
-            except:
+            except JSONDecodeError:
+                print("Json decode error on", ip)
                 is_active = False
 
     def receive_input(self, connection, ip, max_buffer_size):
