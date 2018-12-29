@@ -21,6 +21,8 @@ class Server:
         self.addrs = []
         self.state = State()
         self.socket = None
+        self.count = 0
+        self.total = 0
 
     def start(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -92,7 +94,13 @@ class Server:
 
     def process_input(self, ip, input_str):
         data = input_str
-        self.state.update(ip, json.loads(data))
+        try:
+            self.state.update(ip, json.loads(data))
+            self.count += 1
+            self.total += 1
+        except JSONDecodeError:
+            self.total += 1
+            print("ERROR", self.count/self.total*100.0)
 
 
 if __name__ == "__main__":
