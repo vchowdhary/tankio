@@ -24,7 +24,7 @@ class Client:
         while self.running:
             try:
                 data = self.socket.recv(max_buffer_size).decode().rstrip()
-                if data is None or len(data) == 0:
+                if data is None or len(data) < 5:
                     continue
                 print("Received:", data)
                 self.game.update_game(json.loads(data))
