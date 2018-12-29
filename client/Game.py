@@ -77,7 +77,7 @@ class Game:
         for sprite in self.all_sprites_list:
             if sprite is Tank and sprite.id == m["id"]:
                 sprite.set_position(m["rect x"], m["rect y"])
-                sprite.rotate_fixed(m["orientation"])
+                sprite.rotate(m["orientation"] - sprite.orientation)
                 found = True
         if not found:
             t = Tank(m["center x"], m["center y"], m["orientation"], m["id"])
