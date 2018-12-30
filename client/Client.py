@@ -51,6 +51,7 @@ class Client:
         while self.running:
             try:
                 self.socket.sendall(game.get_data())
+                print(game.get_data())
                 time.sleep(0.05)
             except ConnectionResetError:
                 self.running = False

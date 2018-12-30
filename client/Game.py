@@ -76,6 +76,8 @@ class Game:
             for m in msg[ip]:
                 if m["type"] == "tank":
                     self.update_tank(m)
+                if m["type"] == "bullet":
+                    self.update_bullets(m)
 
     def update_tank(self, m):
         found = False
