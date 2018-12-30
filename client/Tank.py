@@ -33,7 +33,7 @@ class Tank(pygame.sprite.Sprite):
             "rect x": self.rect.x,
             "rect y": self.rect.y,
             "orientation": self.orientation,
-            "hit by": []
+            "hit by": self.hit_by
         }
         return tank_json
 
