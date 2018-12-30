@@ -21,6 +21,8 @@ class Tank(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.id = id
+        self.health = 100
+        self.hit_by = []
 
         self.rect = self.image.get_rect()
         self.rect.topleft = (x-20, y-30)
@@ -33,7 +35,8 @@ class Tank(pygame.sprite.Sprite):
             "center y": self.rect.center[1],
             "rect x": self.rect.x,
             "rect y": self.rect.y,
-            "orientation": self.orientation
+            "orientation": self.orientation,
+            "hit by": []
         }
         return tank_json
 
@@ -79,6 +82,13 @@ class Tank(pygame.sprite.Sprite):
     def set_position(self, x, y):
         self.rect.x = x
         self.rect.y = y
+
+    def check_hit(self, bullets):
+        hit_list = pygame.sprite.spritecollide(self, bullets, True)
+        self.health -= len(hit_list)
+        print(self.health)
+        for bullet in hit_list:
+            self.hit_by.append(bullet.id)
 
 
 

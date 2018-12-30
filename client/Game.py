@@ -54,6 +54,8 @@ class Game:
                 for bullet in self.bullet_list:
                     bullet.move()
 
+                self.tank.check_hit(self.bullet_list)
+
                 self.screen.fill(BLACK)
                 self.all_sprites_list.draw(self.screen)
 
@@ -82,3 +84,4 @@ class Game:
         if not found:
             t = Tank(m["center x"], m["center y"], m["orientation"], m["id"])
             self.all_sprites_list.add(t)
+

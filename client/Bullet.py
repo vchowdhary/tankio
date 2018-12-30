@@ -8,7 +8,7 @@ windowWidth = 400
 windowHeight = 300
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, init_x, init_y, angle, tank_indicator):
+    def __init__(self, init_x, init_y, angle, tank_indicator, id):
         super().__init__()
         print("Creating surface")
         self.image = pygame.Surface([5,5])
@@ -19,6 +19,7 @@ class Bullet(pygame.sprite.Sprite):
         self.y = init_y
         self.angle = angle
         self.tank_indicator = tank_indicator
+        self.id = id
         self.speed = randint(5, 15)
 
         self.rect = self.image.get_rect()
