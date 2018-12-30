@@ -14,7 +14,7 @@ class Bullet(pygame.sprite.Sprite):
         self.y = init_y
         self.angle = angle
         self.tank_indicator = tank_indicator
-        self.id = randint(100, 1000)
+        self.id = randint(100, 10000)
         self.speed = randint(5, 15)
 
         self.rect = self.image.get_rect()
