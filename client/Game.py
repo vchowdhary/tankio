@@ -1,6 +1,7 @@
 import pygame
 import random
 from client.Tank import Tank
+from client.Bullet import Bullet
 from common.GameMessage import GameMessage
 
 color = (255, 255, 255)
@@ -37,7 +38,6 @@ class Game:
                         self.done = True
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                         b = self.tank.shoot()
-                        self.all_sprites_list.add(b)
                         self.bullet_list.add(b)
 
                 pressed = pygame.key.get_pressed()
@@ -58,6 +58,7 @@ class Game:
 
                 self.screen.fill(BLACK)
                 self.all_sprites_list.draw(self.screen)
+                self.bullet_list.draw(self.screen)
 
                 pygame.display.flip()
             except KeyboardInterrupt:
@@ -66,7 +67,7 @@ class Game:
         pygame.quit()
 
     def get_data(self):
-        return GameMessage(self.tank, []).get()
+        return GameMessage(self.tank, self.bullet_list).get()
 
     def update_game(self, msg):
         for ip in msg:
@@ -85,3 +86,14 @@ class Game:
             t = Tank(m["center x"], m["center y"], m["orientation"], m["id"])
             self.all_sprites_list.add(t)
 
+    def update_bullets(self, m):
+        found = False
+        for sprite in self.bullet_list:
+            if sprite.id == m["id"]:
+                sprite.set_position(m["rect x"], m["rect y"])
+                found = True
+        if not found:
+            t = Bullet(m["rect x"], m["rect y"], m["angle"], m["tank_id"])
+            t.id = m["id"]
+            t.speed = m["speed"]
+            self.bullet_list.add(t)

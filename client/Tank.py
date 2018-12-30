@@ -1,10 +1,7 @@
 import pygame
 import math
 from client.Bullet import Bullet
-
-color = (255, 255, 255)
-windowWidth = 800
-windowHeight = 800
+from client.Settings import *
 
 
 class Tank(pygame.sprite.Sprite):
@@ -45,7 +42,6 @@ class Tank(pygame.sprite.Sprite):
         offset_x = pixels*math.cos(orientation_rad)
         offset_y = -1*pixels*math.sin(orientation_rad)
 
-        #print(self.rect)
         if self.rect.x < 0:
             self.rect.x = 0
         if self.rect.x > windowWidth:
@@ -57,13 +53,11 @@ class Tank(pygame.sprite.Sprite):
 
         pygame.Rect.move_ip(self.rect, offset_x, offset_y)
 
-        # print("move called")
-
     def rotate(self, angle):
         center = self.rect.center
         self.orientation += angle
         self.orientation %= 360
-        # print("Rotating", angle, self.orientation)
+
         self.image = pygame.transform.rotate(self.original, self.orientation)
         self.rect = self.image.get_rect(center=center)
 
@@ -71,13 +65,14 @@ class Tank(pygame.sprite.Sprite):
         center = self.rect.center
         self.orientation = angle
         self.orientation %= 360
-        # print("Rotating", angle, self.orientation)
         self.image = pygame.transform.rotate(self.original, self.orientation)
         self.rect = self.image.get_rect(center=center)
 
     def shoot(self):
         orientation_rad = self.orientation*math.pi/180
-        return Bullet(self.rect.center[0]+20*math.cos(orientation_rad), self.rect.center[1]-20*math.sin(orientation_rad), self.orientation, self.id)
+        return Bullet(self.rect.center[0]+20*math.cos(orientation_rad),
+                      self.rect.center[1]-20*math.sin(orientation_rad),
+                      self.orientation, self.id)
 
     def set_position(self, x, y):
         self.rect.x = x
@@ -86,7 +81,6 @@ class Tank(pygame.sprite.Sprite):
     def check_hit(self, bullets):
         hit_list = pygame.sprite.spritecollide(self, bullets, True)
         self.health -= len(hit_list)
-        print(self.health)
         for bullet in hit_list:
             self.hit_by.append(bullet.id)
 

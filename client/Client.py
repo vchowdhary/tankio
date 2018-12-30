@@ -49,14 +49,12 @@ class Client:
 
     def send_data(self, game):
         while self.running:
-            # try:
-            # print(game.get_data())
-            self.socket.sendall(game.get_data())
-            # print("Sent data:", game.get_data())
-            time.sleep(0.05)
-            # except:
-            #     self.running = False
-            #     self.close_connection()
+            try:
+                self.socket.sendall(game.get_data())
+                time.sleep(0.05)
+            except ConnectionResetError:
+                self.running = False
+                self.close_connection()
 
     def close_connection(self):
         self.socket.close()

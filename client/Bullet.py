@@ -1,25 +1,20 @@
 import pygame 
 from random import *
-import numpy as np
 import math
+from client.Settings import *
 
-color = (255, 255, 255)
-windowWidth = 400
-windowHeight = 300
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, init_x, init_y, angle, tank_indicator, id):
+    def __init__(self, init_x, init_y, angle, tank_indicator):
         super().__init__()
-        print("Creating surface")
         self.image = pygame.Surface([5,5])
         self.image.fill(color)
-
 
         self.x = init_x
         self.y = init_y
         self.angle = angle
         self.tank_indicator = tank_indicator
-        self.id = id
+        self.id = randint(100, 1000)
         self.speed = randint(5, 15)
 
         self.rect = self.image.get_rect()
@@ -28,13 +23,9 @@ class Bullet(pygame.sprite.Sprite):
         self.move()
 
     def move(self):
-
-        #print("speed: " + str(self.speed))
         angle_rad = self.angle*math.pi/180
         self.x += self.speed * math.cos(angle_rad)
         self.y -= self.speed * math.sin(angle_rad)
-        #print("new x: ", self.x)
-        #print("new y: ", self.y)
 
         if self.x >= windowWidth:
             self.angle = 180 - self.angle
@@ -47,6 +38,18 @@ class Bullet(pygame.sprite.Sprite):
 
         self.rect.x = self.x
         self.rect.y = self.y
+
+    def to_json(self):
+        bullet_json = {
+            "type": "bullet",
+            "id": self.id,
+            "tank_id": self.tank_indicator,
+            "angle": self.angle,
+            "speed": self.speed,
+            "rect x": self.rect.x,
+            "rect y": self.rect.y
+        }
+        return bullet_json
 
 '''pygame.init()
 

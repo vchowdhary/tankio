@@ -71,8 +71,8 @@ class Server:
         while is_active:
             try:
                 is_active = self.receive_input(connection, ip, max_buffer_size)
-            except JSONDecodeError:
-                print("Json decode error on", ip)
+            except ConnectionResetError:
+                print("Connection reset error on", ip)
                 is_active = False
 
         print("Stopped receiving for ", ip)
