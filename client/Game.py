@@ -52,7 +52,8 @@ class Game:
 
                 self.all_sprites_list.update()
                 for bullet in self.bullet_list:
-                    bullet.move()
+                    if bullet.move():
+                        self.bullet_list.remove(bullet)
 
                 self.tank.check_hit(self.bullet_list)
 

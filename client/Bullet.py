@@ -2,7 +2,7 @@ import pygame
 from random import *
 import math
 from client.Settings import *
-
+import client.util
 
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, init_x, init_y, angle, tank_indicator):
@@ -38,6 +38,9 @@ class Bullet(pygame.sprite.Sprite):
 
         self.rect.x = self.x
         self.rect.y = self.y
+
+        return client.util.out_of_bounds(self.x, self.y)
+
 
     def to_json(self):
         bullet_json = {
