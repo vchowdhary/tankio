@@ -78,10 +78,12 @@ class Tank(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
+    def clear_list(self):
+        self.hit_by = []
+
     def check_hit(self, bullets):
         hit_list = pygame.sprite.spritecollide(self, bullets, True)
         self.health -= len(hit_list)
-        self.hit_by = []
         for bullet in hit_list:
             self.hit_by.append(bullet.id)
 

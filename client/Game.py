@@ -69,7 +69,9 @@ class Game:
         pygame.quit()
 
     def get_data(self):
-        return GameMessage(self.tank, self.bullet_list).get()
+        gm = GameMessage(self.tank, self.bullet_list).get()
+        self.tank.clear_list()
+        return gm
 
     def update_game(self, msg):
         for ip in msg:
