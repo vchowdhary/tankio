@@ -51,8 +51,9 @@ class Game:
                     self.tank.rotate(-5)
 
                 self.all_sprites_list.update()
+
                 for bullet in self.bullet_list:
-                    if bullet.move():
+                    if not bullet.move():
                         self.bullet_list.remove(bullet)
 
                 self.tank.check_hit(self.bullet_list)

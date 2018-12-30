@@ -39,8 +39,7 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
-        return client.util.out_of_bounds(self.x, self.y)
-
+        return not client.util.out_of_bounds(self.x, self.y)
 
     def to_json(self):
         bullet_json = {
