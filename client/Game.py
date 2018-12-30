@@ -36,9 +36,6 @@ class Game:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         self.done = True
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                        b = self.tank.shoot()
-                        self.bullet_list.add(b)
 
                 pressed = pygame.key.get_pressed()
                 if pressed[pygame.K_UP]:
@@ -49,6 +46,9 @@ class Game:
                     self.tank.rotate(5)
                 if pressed[pygame.K_RIGHT]:
                     self.tank.rotate(-5)
+                if pressed[pygame.K_SPACE]:
+                    b = self.tank.shoot()
+                    self.bullet_list.add(b)
 
                 self.all_sprites_list.update()
 
