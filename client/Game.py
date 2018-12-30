@@ -74,10 +74,12 @@ class Game:
     def update_game(self, msg):
         for ip in msg:
             for m in msg[ip]:
-                if m["type"] == "tank":
-                    self.update_tank(m)
                 if m["type"] == "bullet":
                     self.update_bullets(m)
+        for ip in msg:
+            for m in msg[ip]:
+                if m["type"] == "tank":
+                    self.update_tank(m)
 
     def update_tank(self, m):
         found = False
@@ -85,6 +87,11 @@ class Game:
             if sprite.id == m["id"]:
                 sprite.set_position(m["rect x"], m["rect y"])
                 sprite.rotate(m["orientation"] - sprite.orientation)
+                for bid in m["hit by"]:
+                    for bullet_sprite in self.bullet_list:
+                        if bullet_sprite.id == bid:
+                            self.bullet_list.remove(bullet_sprite)
+
                 found = True
         if not found:
             t = Tank(m["center x"], m["center y"], m["orientation"], m["id"])

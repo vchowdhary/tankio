@@ -8,7 +8,7 @@ import client.util
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, init_x, init_y, angle, tank_indicator):
         super().__init__()
-        self.image = pygame.Surface([5,5])
+        self.image = pygame.Surface([5, 5])
         self.image.fill(color)
 
         self.x = init_x
@@ -16,7 +16,7 @@ class Bullet(pygame.sprite.Sprite):
         self.angle = angle
         self.tank_indicator = tank_indicator
         self.id = randint(100, 10000)
-        self.speed = randint(5, 15)
+        self.speed = 10
 
         self.rect = self.image.get_rect()
         self.rect.x = init_x
