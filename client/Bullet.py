@@ -4,6 +4,7 @@ import math
 from client.Settings import *
 import client.util
 
+
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, init_x, init_y, angle, tank_indicator):
         super().__init__()
@@ -52,6 +53,10 @@ class Bullet(pygame.sprite.Sprite):
             "rect y": self.rect.y
         }
         return bullet_json
+
+    def set_position(self, x, y):
+        self.rect.x = x
+        self.rect.y = y
 
 '''pygame.init()
 
